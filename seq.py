@@ -16,14 +16,20 @@ st.title('Blastn e Blastx')
 st.write('Insira sua sequência:')
 seq = st.text_area('')
 
-# Criando botão para rodar o Blastn
-if st.button('Blastn'):
-    st.write('Rodando Blastn...')
+# Para o resultado do blast aparecer na tela, é necessário rodar o código e clicar no botão "Blastn"
+# Criando caixa de texto para inserir sequência
+st.title('Blastn e Blastx')
+st.write('Insira sua sequência:')
+seq = st.text_area('')
+
+# Criando botão para rodar o Blastx
+if st.button('Blastx'):
+    st.write('Rodando Blastx...')
     # Criando arquivo fasta
     rec = SeqRecord(Seq(seq, IUPAC.unambiguous_dna), id='seq')
     SeqIO.write(rec, 'seq.fasta', 'fasta')
-    # Rodando o blastn
-    result_handle = NCBIWWW.qblast("blastn", "nt", 'seq.fasta')
+    # Rodando o blastx
+    result_handle = NCBIWWW.qblast("blastx", "nr", 'seq.fasta')
     # Salvando o resultado
     save_file = open("my_blast.xml", "w")
     save_file.write(result_handle.read())
@@ -33,14 +39,41 @@ if st.button('Blastn'):
     result_handle = open("my_blast.xml")
     blast_records = NCBIXML.parse(result_handle)
     # Imprimindo o resultado
-    for blast_record in blast_records:
+    for blast_record in blast_records
         for alignment in blast_record.alignments:
             for hsp in alignment.hsps:
-                st.write('****Alignment****')
-                st.write('sequence:', alignment.title)
-                st.write('length:', alignment.length)
-                st.write('e value:', hsp.expect)
-                st.write(hsp.query[0:75] + '...')
-                st.write(hsp.match[0:75] + '...')
-                st.write(hsp.
-                         subject[0:75] + '...')
+                st.write("****Alignment****")
+                st.write("sequence:", alignment.title)
+                st.write("length:", alignment.length)
+                st.write("e value:", hsp.expect)
+                st.write(hsp.query[0:75] + "...")
+                st.write(hsp.match[0:75] + "...")
+                st.write(hsp.sbjct[0:75] + "...")
+# Criando botão para rodar o Blastn
+if st.button('Blastn'):
+    st.write('Rodando Blastn...')
+    # Criando arquivo fasta
+    rec = SeqRecord(Seq(seq, IUPAC.unambiguous_dna), id='seq')
+    SeqIO.write(rec, 'seq.fasta', 'fasta')
+    # Rodando o blastn
+    result_handle = NCBIWWW.qblast("blastn", "nr", 'seq.fasta')
+    # Salvando o resultado
+    save_file = open("my_blast.xml", "w")
+    save_file.write(result_handle.read())
+    save_file.close()
+    result_handle.close()
+    # Lendo o resultado
+    result_handle =
+    open("my_blast.xml")
+    blast_records = NCBIXML.parse(result_handle)
+    # Imprimindo o resultado
+    for blast_record in blast_records
+        for alignment in blast_record.alignments:
+            for hsp in alignment.hsps:
+                st.write("****Alignment****")
+                st.write("sequence:", alignment.title)
+                st.write("length:", alignment.length)
+                st.write("e value:", hsp.expect)
+                st.write(hsp.query[0:75] + "...")
+                st.write(hsp.match[0:75] + "...")
+                st.write(hsp.sbjct[0:75] + "...")
