@@ -94,8 +94,7 @@ metadata_extractor("blast_output.tsv")
 
 def new_columns(info_input, info_blast, query_input, query_blast):
     query_input = info_input[query_input]
-    query_blast = info_blast[query_
-    blast]
+    query_blast = info_blast[query_blast]
     new_columns_info = pd.concat([info_input.reset_index(drop=True), info_blast.reset_index(drop=True)], axis=1)
     new_columns_info["Query Subtype"] = query_input + query_blast
     new_columns_info[1] = pd.to_numeric(new_columns_info[1])
