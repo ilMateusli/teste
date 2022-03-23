@@ -148,9 +148,7 @@ def identity():
 
             identity_list = []
             identity_number = []
-            a, b
-            =
-        0, 0
+            a, b = 0, 0
         start = 0
         end = len(col5_final_list)
         while a in range(end) and b in range(end):
