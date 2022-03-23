@@ -101,17 +101,6 @@ def new_columns(info_input, info_blast, query_input, query_blast):
 
     return new_columns_info
 
-
-if __name__ == '__main__':
-    streamlit run -f name.py
-else:
-    new_columns_info
-
-if __name__ == '__main__':
-    streamlit run -f name.py
-else:
-    new_columns_info
-
 def filtering():
     conditions = ["viral_|", "CmS", "SRSF3", "SRSF2", "SRSF11", "STK4", "STAU1", "HMBS", "LM2", "ND2", "LMNA", "ND6", "17S", "ND1", "ND3", "ND4",
                   "ND4L", "ND5", "ND6", "STK33", "TP53", "KCNE1", "KCNE2", "PCMT1", "PMPCB", "PPLA2", "PRKAA2", "PRKCE", "PRPF40B", "PRPF3",
