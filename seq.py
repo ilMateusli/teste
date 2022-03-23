@@ -108,15 +108,8 @@ def filtering():
                   "SRSF11", "STK33", "STK4", "STAU1", "SYCOX2P", "TNFAIP8", "TYMP", "VCP"]
 
     new_columns_info["Flçag"] = "Not Viral"
-
-    for each in conditions:
-
-        new_columns_info.loc[new_columns_info["Query Subtype"].str.contains(each), "Flag"] = "Viral"
-        new_columns_info.loc[(new
-        _columns_info["Flag"] == "Viral") & (new_columns_info[0] == "Homo sapiens"), "Subtype"] = each + new_columns_info["Query Subtype"][0]
-        new_columns_info.loc[new_columns_info["Flag"] == "Not Viral", "Subtype"] = "/"
     return new_columns_info
-
+    
 
 def set_heatmap(new_columns_info, first_query_input, second_query_input, first_query_blast,
                   second_query_blast):
