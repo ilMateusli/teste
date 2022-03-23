@@ -21,7 +21,6 @@ if text != "Insira sua sequência":
     result_handle.close()
 
     st.write("Salvando o resultado do blast, caso você queira abrir depois")
-    time.sleep(2)
     st.balloons()
     result_handle = open("my_blast.xml")
     from Bio.Blast import NCBIXML
