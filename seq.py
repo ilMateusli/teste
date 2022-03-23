@@ -206,8 +206,7 @@ def identity_calculator(identity_list):
             while [i] < len(identity_list):
                 a1 = app_identity[i]
                 a2 = app_identity[i + 1]
-                complements += int(a2) - int
-                        (a1)
+                complements += int(a2) - int(a1)
             final_identity.append(complement_identity / complements)
             # return final_identity
 
