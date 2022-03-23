@@ -3,8 +3,6 @@ import pandas as pd
 from Bio import SeqIO
 from Bio.Blast import NCBIWWW
 import numpy as np
-import time
-
 
 st.title('Pipeline Detecção Viral')
 
