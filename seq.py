@@ -1,37 +1,35 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-from Bio.Blast import NCBIWWW
-from Bio.Blast import NCBIXML
-from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import IUPAC
-from Bio.Blast import NCBIWWW
-from Bio.Blast import NCBIXML
-from Bio.Blast.Applications import NcbiblastnCommandline
+st.title("Viral Detector")
+st.write("Streamlit + BioPython")
 
-# Criando caixa de texto para inserir sequência
-st.title('Blastn e Blastx')
-st.write('Insira sua sequência:')
-seq = st.text_area('')
+with open("blast.html", "r") as file:
+   html = file.read()
 
-# Para o resultado do blast aparecer na tela, é necessário rodar o código e clicar no botão "Blastn"
-# Criando caixa de texto para inserir sequência
-st.title('Blastn e Blastx')
-st.write('Insira sua sequência:')
-seq = st.text_area('')
+# Inserção do texto
+text = st.text_area("Insira as sequências a serem analisadas", "")
 
-# Criando botão para rodar o Blastx
-if st.button('Blastx'):
-    st.write('Rodando Blastx...')
-    result_handle = NCBIWWW.qblast("blastx", "nr", seq)
-    blast_records = NCBIXML.read(result_handle)
-    st.write(blast_records)
+# Convertendo o texto para um arquivo fasta
+if text != "":
+    file = open("sequencias.fasta", "w")
+    file.write(text)
+    file.close()
 
-# Criando botão para rodar o Blastn
-if st.button('Blastn'):
-    st.write('Rodando Blastn...')
-    result_handle = NCBIWWW.qblast("blastn", "nt", seq)
-    blast_records = NCBIXML.read(result_handle)
-    st.write(blast_records)
+# Converter o arquivo fasta em uma string
+sequences = ""
+for seq_record in SeqIO.parse("sequencias.fasta", "fasta"):
+    sequences += str(seq_record.seq)
+sequences = sequences.replace("\n", "")
+
+# Realizando o blast
+if sequences != "":
+    file = open("sequencias.fasta", "w")
+    file.write(sequences)
+    file.
+    close()
+    subprocess.call(["blastn", "-query", "sequencias.fasta", "-db", "refseq_rna", "-out", "sequencias.txt"])
+
+
+# Gerando o html com o resultado do blast
+with open("sequencias.txt", "r") as file:
+   html = file.read()
+
+st.write(html, unsafe_allow_html=True)
