@@ -113,8 +113,7 @@ def filtering():
 
         new_columns_info.loc[new_columns_info["Query Subtype"].str.contains(each), "Flag"] = "Viral"
         new_columns_info.loc[(new
-        _columns_info["Flag"] == "Viral") & (new_columns_info[0] == "Homo sapiens"), "Subtype"] = \
-            each + new_columns_info["Query Subtype"][0]
+        _columns_info["Flag"] == "Viral") & (new_columns_info[0] == "Homo sapiens"), "Subtype"] = each + new_columns_info["Query Subtype"][0]
         new_columns_info.loc[new_columns_info["Flag"] == "Not Viral", "Subtype"] = "/"
     return new_columns_info
 
