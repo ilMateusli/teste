@@ -39,5 +39,4 @@ if text != "Insira sua sequência":
                 time.sleep(2)
     result_handle.close()
     st.write("O arquivo foi salvo e pode ser baixado em my_blast.xml")
-    st.download_button('Baixar', result_handle)
-    st.write("Obrigado por usar nosso programa")
+    st.write(result_handle)
