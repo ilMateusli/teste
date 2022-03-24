@@ -32,7 +32,6 @@ if st.button("Analisar sequência"):
     for alignment in blast_record.alignments:
         for hsp in alignment.hsps:
             if hsp.expect < E_VALUE_THRESH:
-                st.
                 st.write("****Alignment****")
                 st.write("sequence:", alignment.title)
                 st.write("length:", alignment.length)
