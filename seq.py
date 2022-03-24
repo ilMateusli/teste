@@ -3,6 +3,7 @@ import pandas as pd
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.Blast import NCBIWWW
+from Bio.Blast import NCBIXML
 import numpy as np
 
 text = st.text_area("Insira sua sequência")
