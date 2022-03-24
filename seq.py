@@ -21,10 +21,10 @@ if st.button("Analisar"):
     blast_record = next(blast_records)
     E_VALUE_THRESH = 0.04
 
+    df = pd.DataFrame(columns=['Sequência', 'Tamanho', 'E-value'])
     for alignment in blast_record.alignments:
         for hsp in alignment.hsps:
             if hsp.expect < E_VALUE_THRESH:
-                st.write("****Alignment****")
-                st.write("sequence:", alignment.title)
-                st.write("length:", alignment.length)
-                st.write("e value:", hsp.expect)
+                df = df.append({'Sequência': alignment.title, 'Tamanho': alignment.length, 'E-value': hsp.expect}, ignore_index=True)
+# st.table(df) para tabela
+    st.write(df)
