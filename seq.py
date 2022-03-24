@@ -13,6 +13,7 @@ if text != "Insira sua sequência":
 
     blast = st.radio("Escolha o tipo de blast",("blastp","blastn","tblastn"))
     input_fasta = Seq(text)
+    result_handle = NCBIWWW.qblast("blastx", "nr", input_fasta, ncbi_gi=False, descriptions= "1", alignments="1", format_type="XML", hitlist_size="1", entrez_query='(Bacteria[ORGN] OR Archaea[ORGN])')
     result_handle = NCBIWWW.qblast("blastx", "nr", input_fasta)
     save_file = open("blast.xml", "w")
     save_file.write(result_handle.read())
