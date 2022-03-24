@@ -6,17 +6,17 @@ from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
 import numpy as np
 
-st.title("Analisador de sequências do genoma do coronavírus")
+st.title("Labinftec Blastn")
 
 st.write("""
     # Analisador de sequências
     Este analisador utiliza o sistema de blast para analisar uma sequência de DNA e retornar o resultado do blast.
 
-    **Para utilizar o analisador, basta inserir uma sequência de DNA com no máximo 300 nucleotídeos.**
+    **Para utilizar o analisador, basta inserir uma sequência e clicar no botão.**
     """)
 
 st.write("Insira uma sequência de DNA para ser analisada:")
-input_fasta = st.text_input("", "CAACCGCTATTCCTCTTTTTGCAGGGGTTTTTCAAAATTATCAAGTTCCTCTTTTATCAGTATATGTTCAAGCTGCAAATTTACATTTATCAGTTTTGAGAGATGTTTCAGTGTTTGGACAAAGAAGACCTTTTAATATAGGGATAAATAATCAACAACGGCCTAGCCTCCCAGGTTTATCTGTTCTTGACGGGACAGAATTTGCTTATGGGACCTCCTCAAATTTGCCATCCGCTGTATACAGAAAAAGCGGAACGGTAGATTCGCTGGAT")
+input_fasta = st.text_area("", "CAACCGCTATTCCTCTTTTTGCAGGGGTTTTTCAAAATTATCAAGTTCCTCTTTTATCAGTATATGTTCAAGCTGCAAATTTACATTTATCAGTTTTGAGAGATGTTTCAGTGTTTGGACAAAGAAGACCTTTTAATATAGGGATAAATAATCAACAACGGCCTAGCCTCCCAGGTTTATCTGTTCTTGACGGGACAGAATTTGCTTATGGGACCTCCTCAAATTTGCCATCCGCTGTATACAGAAAAAGCGGAACGGTAGATTCGCTGGAT")
 
 if st.button("Analisar sequência"):
     result_handle = NCBIWWW.qblast("blastn", "nr", input_fasta.format("fasta"))
