@@ -32,13 +32,10 @@ if st.button("Analisar sequência"):
     for alignment in blast_record.alignments:
         for hsp in alignment.hsps:
             if hsp.expect < E_VALUE_THRESH:
+                data = {'sequence': alignment.title, 'length': alignment.length, 'e value': hsp.expect, 'sbjct': hsp.sbjct[0:75] + "..."}
+                df = pd.DataFrame(data, columns = ['sequence', 'length', 'e value', 'sbjct'])
                 st.write("****Alignment****")
-                st.write("sequence:", alignment.title)
-                st.write("length:", alignment.length)
-                st.write("e value:", hsp.expect)
-                st.write(hsp.query[0:75] + "...")
-                st.write(hsp.match[0:75] + "...")
-                st.write(hsp.sbjct[0:75] + "...")
+                st.dataframe(df)
 
 st.write("""
     ### Referências:
