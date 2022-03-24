@@ -13,32 +13,22 @@ if text != "Insira sua sequência":
 
     blast = st.radio("Escolha o tipo de blast",("blastp","blastn","tblastn"))
     input_fasta = Seq(text)
-    result_handle = NCBIWWW.qblast("blastn", "nr", input_fasta)
-
-    st.write("O blast está sendo realizado, aguarde")
-    st.balloons()
-# O repositório é do GitHub e por isso, os arquivos são necessários para rodar
-    with open("blast.xml", "w") as out_handle:
-        out_handle.write(result_handle.read())
+    result_handle =
+    NCBIWWW.qblast(blast, "nr", input_fasta)
+    save_file = open("blast.xml", "w")
+    save_file.write(result_handle.read())
+    save_file.close()
     result_handle.close()
 
-    st.write("Carregando resultados")
-    st.balloons()
+    st.write("Blast finalizado, por favor aguarde enquanto o resultado é lido")
 
-    from Bio.Blast import NCBIXML
-    result_handle = open("blast.xml")
-    blast_records = NCBIXML.parse(result_handle)
-    E_VALUE_THRESH = 0.01
-    for blast_record in blast_records:
-        for alignment in blast_record.alignments:
-            for hsp in alignment.hsps:
-                if hsp.expect < E_VALUE_THRESH:
-                    st.write("****Alignment****")
-                    st.write("Sequence:", alignment.title)
-                    st.write("Length:", alignment.length)
-                    st.write("e value:", hsp.expect)
-                    st.write(hsp.query[0:75] + "...")
-                    st.write(hsp.match[0:75] + "...")
-                    st.write(hsp.sbjct[0:75] + "...")
-else:
-    st.write("Insira a sequência acima")
+    record = SeqIO.read("blast.xml", "blast-xml")
+    result = []
+    for alignment in record.alignments:
+        for hsp in alignment.hsps:
+            result.append([alignment.hit_id, alignment.length, hsp.expect, "..." + hsp.query[-35:] + "[" + str(hsp.match) + "]" + hsp.sbjct[:35] + "...", alignment.title, alignment.accession])
+    result = pd.DataFrame(result, columns = ["Identificador", "Tamanho (aminoácidos)", "E-value", "Alinhamento", "Título", "Acesso"])
+    result = result.sort_values("E-value").reset_index(drop=True)
+
+    st.table(result)
+    st.write("Fim do programa")
