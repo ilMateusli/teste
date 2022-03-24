@@ -13,7 +13,7 @@ if text != "Insira sua sequência":
 
     blast = st.radio("Escolha o tipo de blast",("blastp","blastn","tblastn"))
     input_fasta = Seq(text)
-    result_handle = NCBIWWW.qblast(blast, "nr", input_fasta, matrix_name = "BLOSUM62", expect = 10, hitlist_size = 10)
+    result_handle = NCBIWWW.qblast(blast, "nr", input_fasta.format("fasta"))
     save_file = open("blast.xml", "w")
     save_file.write(result_handle.read())
     save_file.close()
