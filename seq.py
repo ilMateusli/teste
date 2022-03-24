@@ -8,13 +8,13 @@ import numpy as np
 
 st.title("Labinftec Blastn")
 
-text = st.text_area("Insira sua sequência")
+text = (st.text_area("Insira sua sequência").format("fasta"))
 
 if text != "Insira sua sequência":
     st.write("Analisando a sequência")    
     blast = st.radio("Escolha o tipo de blast",("blastp","blastn","tblastn"))
     input_fasta = "ATCGATCGATCGTGATCGATCGTAGGTACGAGTG"
-    result_handle = NCBIWWW.qblast(blast, "nr", input_fasta.format("fasta"))
+    result_handle = NCBIWWW.qblast(blast, "nr", text)
     save_file = open("blast.xml", "w")
     save_file.write(result_handle.read())
     save_file.close()
