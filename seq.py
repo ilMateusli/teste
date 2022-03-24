@@ -6,29 +6,43 @@ from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
 import numpy as np
 
-text = st.text_area("Insira sua sequência")
+st.title("Analisador de sequências do genoma do coronavírus")
 
-if text != "Insira sua sequência":
-    st.write("Analisando a sequência")
-    st.balloons()
+st.write("""
+    # Analisador de sequências
+    Este analisador utiliza o sistema de blast para analisar uma sequência de DNA e retornar o resultado do blast.
 
-    blast = st.radio("Escolha o tipo de blast",("blastp","blastn","tblastn"))
-    input_fasta = text
-    result_handle = NCBIWWW.qblast(blast, "nr", input_fasta.format("fasta"))
+    **Para utilizar o analisador, basta inserir uma sequência de DNA com no máximo 300 nucleotídeos.**
+    """)
+
+st.write("Insira uma sequência de DNA para ser analisada:")
+input_fasta = st.text_input("", "CAACCGCTATTCCTCTTTTTGCAGGGGTTTTTCAAAATTATCAAGTTCCTCTTTTATCAGTATATGTTCAAGCTGCAAATTTACATTTATCAGTTTTGAGAGATGTTTCAGTGTTTGGACAAAGAAGACCTTTTAATATAGGGATAAATAATCAACAACGGCCTAGCCTCCCAGGTTTATCTGTTCTTGACGGGACAGAATTTGCTTATGGGACCTCCTCAAATTTGCCATCCGCTGTATACAGAAAAAGCGGAACGGTAGATTCGCTGGAT")
+
+if st.button("Analisar sequência"):
+    result_handle = NCBIWWW.qblast("blastn", "nr", input_fasta.format("fasta"))
     save_file = open("blast.xml", "w")
     save_file.write(result_handle.read())
     save_file.close()
     result_handle.close()
-
     st.write("Blast finalizado, por favor aguarde enquanto o resultado é lido")
-
-    record = SeqIO.read("blast.xml", "blast-xml")
-    result = []
-    for alignment in record.alignments:
+    result_handle = open("blast.xml")
+    blast_records = NCBIXML.parse(result_handle)
+    blast_record = next(blast_records)
+    E_VALUE_THRESH = 0.04
+    for alignment in blast_record.alignments:
         for hsp in alignment.hsps:
-            result.append([alignment.hit_id, alignment.length, hsp.expect, "..." + hsp.query[-35:] + "[" + str(hsp.match) + "]" + hsp.sbjct[:35] + "...", alignment.title, alignment.accession])
-    result = pd.DataFrame(result, columns = ["Identificador", "Tamanho (aminoácidos)", "E-value", "Alinhamento", "Título", "Acesso"])
-    result = result.sort_values("E-value").reset_index(drop=True)
+            if hsp.expect < E_VALUE_THRESH:
+                st.
+                st.write("****Alignment****")
+                st.write("sequence:", alignment.title)
+                st.write("length:", alignment.length)
+                st.write("e value:", hsp.expect)
+                st.write(hsp.query[0:75] + "...")
+                st.write(hsp.match[0:75] + "...")
+                st.write(hsp.sbjct[0:75] + "...")
 
-    st.table(result)
-    st.write("Fim do programa")
+st.write("""
+    ### Referências:
+    * https://www.ncbi.nlm.nih.gov/books/NBK279671/
+    * https://streamlit.io/docs/
+""")
