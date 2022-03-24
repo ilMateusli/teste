@@ -13,7 +13,7 @@ if text != "Insira sua sequência":
 
     blast = st.radio("Escolha o tipo de blast",("blastp","blastn","tblastn"))
     input_fasta = Seq(text)
-    result_handle = NCBIWWW.qblast("blastn", "nr", input_fasta)
+    result_handle = NCBIWWW.qblast("blastn", "nr", input_fasta, format_type="XML")
 
     st.write("O blast está sendo realizado, aguarde")
     st.balloons()
